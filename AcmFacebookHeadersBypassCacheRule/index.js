@@ -4,21 +4,17 @@
 // Event type: Viewer Request 
 exports.handler = (event, context, callback) => {
      const request = event.Records[0].cf.request;
-     const uri = request.uri;
      const headers = request.headers;
-     const userAgentHeaderName = 'User-Agent';
-     const cacheControlHeaderName = 'Cache-Control';
-     const cacheControlHeaderValue = 'no-cache';
-     console.log('Host name is '+headers['host'][0].value);
-     if ( headers['user-agent'][0].value == 'facebookexternalhit/1.0*'
-        || headers['user-agent'][0].value == 'facebookexternalhit/1.1*'
-         || headers['user-agent'][0].value == 'facebookexternalhit/1.0'
-         || headers['user-agent'][0].value == 'facebookexternalhit/1.1'
-         || headers['user-agent'][0].value == 'facebookexternalhit/1.0 (+http://www.facebook.com/externalhit_uatext.php)'
-         || headers['user-agent'][0].value == 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)'){
-         headers[cacheControlHeaderName.toLowerCase()] = [{
-           key: cacheControlHeaderName,
-           value: cacheControlHeaderValue
+     const userAgentHeaderVal = headers['user-agent'][0].value;
+     if ( userAgentHeaderVal == 'facebookexternalhit/1.0*'
+        || userAgentHeaderVal == 'facebookexternalhit/1.1*'
+         || userAgentHeaderVal == 'facebookexternalhit/1.0'
+         || userAgentHeaderVal == 'facebookexternalhit/1.1'
+         || userAgentHeaderVal == 'facebookexternalhit/1.0 (+http://www.facebook.com/externalhit_uatext.php)'
+         || userAgentHeaderVal == 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)'){
+         headers['cache-control'] = [{
+           key: 'Cache-Control',
+           value: 'no-cache'
            }];
      }
      callback(null, request);
