@@ -10,7 +10,7 @@ exports.handler = (event, context, callback) => {
     }
     callback(null, request);
   } catch (error) {
-      console.error('AcmRewriteCacheControlHeader: CloudFront requestId='+event.Records[0].cf.config.requestId+ ", error.message: "+error.message+
+      console.error('AcmRewriteImagesUri: CloudFront requestId='+event.Records[0].cf.config.requestId+ ", error.message: "+error.message+
       ", error.stack: "+error.stack);
       throw (error);
   }
